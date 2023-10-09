@@ -20,7 +20,7 @@ public class Review extends BaseEntity {
     @Column(columnDefinition = "TINYINT(0) DEFAULT 0")
     private boolean isMod;
 
-    @Column(columnDefinition = "YINYINT(0) DEFAULT 0")
+    @Column(columnDefinition = "TINYINT(0) DEFAULT 0")
     private boolean isDel;
 
     @ManyToOne(fetch = FetchType.LAZY)
