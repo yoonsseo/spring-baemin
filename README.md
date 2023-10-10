@@ -24,13 +24,13 @@
 ## 📌 참여자 
 <div>
     <a href="https://github.com/HxWOO">
-        <img src="https://github.com/yoonsseo/spring-core/assets/90557277/eae40231-884d-43ce-9844-6f6c40e74cee" alt="김현우" width="300" height="300"/>
+        <img src="https://github.com/yoonsseo/spring-core/assets/90557277/eae40231-884d-43ce-9844-6f6c40e74cee" alt="김현우" width="200" height="200"/>
     </a>
     <a href="https://github.com/yoonsseo">
-        <img src="https://github.com/yoonsseo/spring-core/assets/90557277/ce2c523e-41a5-4214-a2c9-08f30867dcb0" alt="이윤서" width="300" height="300"/>
+        <img src="https://github.com/yoonsseo/spring-core/assets/90557277/ce2c523e-41a5-4214-a2c9-08f30867dcb0" alt="이윤서" width="200" height="200"/>
     </a>
     <a href="https://github.com/Iaminjae">
-        <img src="https://github.com/yoonsseo/spring-core/assets/90557277/64f6dbf2-46ba-4637-9d64-6dd44204952f" alt="전민제" width="300" height="300"/>
+        <img src="https://github.com/yoonsseo/spring-core/assets/90557277/64f6dbf2-46ba-4637-9d64-6dd44204952f" alt="전민제" width="200" height="200"/>
     </a>
 </div>
 
