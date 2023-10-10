@@ -3,6 +3,7 @@ package hyunwoo.baemin.domain.Shop;
 import hyunwoo.baemin.domain.Base.BaseEntity;
 import hyunwoo.baemin.domain.Order.Order;
 import hyunwoo.baemin.domain.Review.Review;
+import hyunwoo.baemin.domain.User.WishShop;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -27,4 +28,7 @@ public class Shop extends BaseEntity {
 
     @OneToMany(mappedBy = "shop")
     private List<Order> orders = new ArrayList<>();
+
+    @OneToMany(mappedBy = "shop")
+    private List<WishShop> wishedList = new ArrayList<>();
 }
