@@ -12,14 +12,15 @@
   1. 배달의 민족 DB 모델링 - `domain`, `repository` 계층 작성
   2. Repository 단위 테스트
   3. `README.md` 정리
-#### 2. CRUD API
-* 기간 : ~ 2023.10.30
-* 내용
-  1. 데이터를 `Create`, `Read`, `Update`, `Delete` 하는 API 종류별로 하나씩 생성
-  2. `GET`, `POST`, `DELETE`, `PUT` 메소드 종류별로 하나씩 API 생성
-* 코드리뷰 필수 : 2023.10.31
-#### 3. '주문' 로직 만들어보기
-#### 4. Spring Security 
+#### 2. CRUD API '주문' 로직 생성 
+* 기간 : ~ 2023.10.31 (∵중간고사) 
+* 내용 
+  1. `Create`, `Read`, `Update`, `Delete` 의 데이터 CRUD와  
+  `GET`, `POST`, `DELETE`, `PUT` 등의 Http Method 를 고려해 API 생성
+  2. 핵심 로직인 `주문`이 생성되는 로직 만들어보기 
+* 코드리뷰할까 
+#### 3. Spring Security 
+#### 4. 뭐하지? 
 
 ## 📌 참여자 
 <div>
