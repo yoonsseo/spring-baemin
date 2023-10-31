@@ -13,14 +13,21 @@
   2. Repository 단위 테스트
   3. `README.md` 정리
 #### 2. CRUD API '주문' 로직 생성 
-* 기간 : ~ 2023.10.31 (∵중간고사) 
+* 기간 : ~ 2023.11.07 
 * 내용 
   1. `Create`, `Read`, `Update`, `Delete` 의 데이터 CRUD와  
   `GET`, `POST`, `DELETE`, `PUT` 등의 Http Method 를 고려해 API 생성
-  2. 핵심 로직인 `주문`이 생성되는 로직 만들어보기 
+  2. 핵심 로직인 `주문`이 생성되는 로직 만들어보기
+  3. Spring Security Architecture 
 * 코드리뷰할까 
 #### 3. Spring Security 
+* 기간 : ~ 2023.11.14
+* 내용
+  1. 회원가입, 로그인
+  2. 인증과 인가
 #### 4. 뭐하지? 
+* 기간 : ~ 2023.11.21
+  * 내용 
 
 ## 📌 참여자 
 <div>
