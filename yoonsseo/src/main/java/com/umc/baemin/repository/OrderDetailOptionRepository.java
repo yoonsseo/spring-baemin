@@ -1,11 +1,10 @@
 package com.umc.baemin.repository;
 
-import com.umc.baemin.domain.Address;
+import com.umc.baemin.domain.OrderDetailOption;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 @Repository
-public interface AddressRepository extends JpaRepository<Address, Long> {
+
+public interface OrderDetailOptionRepository extends JpaRepository<OrderDetailOption, Long> {
 }

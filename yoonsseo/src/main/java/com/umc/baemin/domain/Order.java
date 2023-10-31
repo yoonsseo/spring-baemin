@@ -5,9 +5,13 @@ import com.umc.baemin.domain.enums.PayMethod;
 import com.umc.baemin.domain.enums.ReceiveMethod;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
+import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Table(name = "orders")
 public class Order extends BaseEntity {
@@ -32,6 +36,7 @@ public class Order extends BaseEntity {
     private int totalPrice;
 
     @Enumerated(value = EnumType.STRING)
+    @ColumnDefault("\"RECEPTION\"")
     private OrderStatus orderStatus;
 
     @NotNull
@@ -50,5 +55,7 @@ public class Order extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "shop_id")
+    private Shop shop;
 }

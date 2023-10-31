@@ -26,7 +26,7 @@ public class User extends BaseEntity {
     private String image;
 
     @Enumerated(value = EnumType.STRING)
-    @ColumnDefault("THANKS")
+    @ColumnDefault("\"THANKS\"")
     private UserGrade userGrade;
 
     @ColumnDefault("0")
