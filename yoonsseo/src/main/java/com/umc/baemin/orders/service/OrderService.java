@@ -3,17 +3,22 @@ package com.umc.baemin.orders.service;
 import com.umc.baemin.domain.*;
 import com.umc.baemin.domain.enums.PayMethod;
 import com.umc.baemin.domain.enums.ReceiveMethod;
-import com.umc.baemin.orders.dto.MenuDto;
-import com.umc.baemin.orders.dto.TryRequestDto;
-import com.umc.baemin.orders.dto.OrderRequestDto;
-import com.umc.baemin.orders.dto.TryResponseDto;
+import com.umc.baemin.orders.dto.detail.MenuDetailDto;
+import com.umc.baemin.orders.dto.detail.OrderDetailResponseDto;
+import com.umc.baemin.orders.dto.list.OrderDto;
+import com.umc.baemin.orders.dto.list.OrderListResponseDto;
+import com.umc.baemin.orders.dto.order.*;
 import com.umc.baemin.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -70,11 +75,19 @@ public class OrderService {
         for (int i = 0; i < orderRequestDto.getMenus().size(); i++) {
             MenuDto menuDto = orderRequestDto.getMenus().get(i);
             Menu menu = menuRepository.findById(menuDto.getMenuId()).get();
+            List<Long> optionIds = menuDto.getOptionIds();
+            List<Integer> optionPrices = optionIds.stream().map(optionId -> optionRepository.findById(optionId).get().getPrice()).toList();
+            int orderDetailPrice = 0;
+            for (Integer optionPrice : optionPrices) {
+                orderDetailPrice += optionPrice;
+            }
+            orderDetailPrice += menu.getPrice();
 
             OrderDetail orderDetail = OrderDetail.builder()
                     .order(order)
                     .menu(menu)
                     .count(menuDto.getCount())
+                    .price(orderDetailPrice)
                     .build();
             orderDetailRepository.save(orderDetail);
 
@@ -88,9 +101,80 @@ public class OrderService {
                         .build();
                 orderDetailOptionRepository.save(orderDetailOption);
             }
+
+
         }
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    public OrderStatusResponseDto getOrderStatus(Long orderId, Long userId) {
+        Order order = orderRepository.findById(orderId).get();
+        LocalDateTime time = order.getCreatedAt().plusMinutes(order.getEta());
+        String menuName = orderDetailRepository.findByOrderId(orderId).get(0).getMenu().getName();
+        int menuNum = orderDetailRepository.findByOrderId(orderId).size();
+
+        return OrderStatusResponseDto.builder()
+                .receiveMethod(order.getReceiveMethod().toString())
+                .orderStatus(order.getOrderStatus().toString())
+                .eta(order.getEta())
+                .time(time)
+                .orderId(orderId)
+                .address(order.getDeliveryAddress())
+                .request(order.getRequest())
+                .shopName(order.getShop().getName())
+                .menuName(menuName)
+                .menuNum(menuNum)
+                .totalPrice(order.getTotalPrice())
+                .build();
+    }
+
+    public OrderDetailResponseDto getOrderDetail(Long orderId) {
+        Order order = orderRepository.findById(orderId).get();
+        String menuName = orderDetailRepository.findByOrderId(orderId).get(0).getMenu().getName();
+        int menuNum = orderDetailRepository.findByOrderId(orderId).size();
+        List<MenuDetailDto> menus = new ArrayList<>();
+        for (int i = 0; i < menuNum; i++) {
+            OrderDetail orderDetail = orderDetailRepository.findByOrderId(orderId).get(i);
+            Menu menu = orderDetail.getMenu();
+            List<OrderDetailOption> orderDetailOptions = orderDetailOptionRepository.findByOrderDetailId(orderDetail.getId());
+            List<String> options = orderDetailOptions.stream().map(OrderDetailOption -> OrderDetailOption.getOption().getName()).toList();
+
+            MenuDetailDto menuDetailDto = MenuDetailDto.builder()
+                    .menuId(menu.getId())
+                    .menuName(menu.getName())
+                    .count(orderDetail.getCount())
+                    .options(options)
+                    .price(orderDetail.getPrice())
+                    .build();
+            menus.add(menuDetailDto);
+        }
+
+        return OrderDetailResponseDto.builder()
+                .orderStatus(order.getOrderStatus().toString())
+                .shopName(order.getShop().getName())
+                .menuName(menuName)
+                .menuNum(menuNum)
+                .orderTime(order.getCreatedAt())
+                .orderId(orderId)
+                .receiveMethod(order.getReceiveMethod().toString())
+                .menus(menus)
+                .orderPrice(order.getOrderPrice())
+                .deliveryFee(order.getDeliveryFee())
+                .totalPrice(order.getTotalPrice())
+                .payMethod(order.getPayMethod().toString())
+                .deliveryAddress(order.getDeliveryAddress())
+                .phone(order.getUser().getPhone())
+                .request(order.getRequest())
+                .build();
+    }
+
+    public OrderListResponseDto getOrderList(Long userId, Pageable pageable) {
+        Page<Order> orders = orderRepository.findByUser(userId, pageable);
+        Page<OrderDto> orderDtos = orders.map(order -> new OrderDto(order,
+                        shopRepository.findById(order.getShop().getId()).get(),
+                        orderDetailRepository.findByOrderId(order.getId()).get(0).getMenu().getName(),
+                        orderDetailRepository.findByOrderId(order.getId()).size()));
+        return new OrderListResponseDto(orderDtos.getTotalPages(), orderDtos.getNumber(), orderDtos.getContent());
+    }
 }

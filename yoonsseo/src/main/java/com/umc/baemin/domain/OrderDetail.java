@@ -20,6 +20,9 @@ public class OrderDetail extends BaseEntity {
     @NotNull
     private int count;
 
+    @NotNull
+    private int price;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "menu_id")
     private Menu menu;

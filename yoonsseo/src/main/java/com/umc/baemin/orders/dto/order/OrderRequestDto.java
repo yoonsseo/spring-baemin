@@ -1,6 +1,6 @@
-package com.umc.baemin.orders.dto;
+package com.umc.baemin.orders.dto.order;
 
-import com.umc.baemin.domain.Menu;
+import com.umc.baemin.orders.dto.order.MenuDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

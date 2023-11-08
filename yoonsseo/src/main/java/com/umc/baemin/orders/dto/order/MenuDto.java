@@ -1,4 +1,4 @@
-package com.umc.baemin.orders.dto;
+package com.umc.baemin.orders.dto.order;
 
 
 import lombok.AllArgsConstructor;
