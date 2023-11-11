@@ -1,0 +1,33 @@
+package hyunwoo.baemin.global.redis;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.stereotype.Service;
+
+import java.time.Duration;
+
+@Service
+@RequiredArgsConstructor
+public class RedisService {
+
+    private final RedisTemplate<String, String> redisTemplate;
+
+    //redis에 <key, value> 삽입, timeout 분 동안 유지
+    public void setValue(String key, String value, Long timeout){
+        ValueOperations<String, String> values = redisTemplate.opsForValue();
+        values.set(key, value, Duration.ofMinutes(timeout));
+    }
+
+    // key를 value로 반환
+    public String getValue(String key){
+        ValueOperations<String, String> values = redisTemplate.opsForValue();
+        return values.get(key);
+    }
+
+    // key를 이용해 <key, value> 삭제
+    public void deleteValue(String key){
+        redisTemplate.delete(key);
+    }
+
+}
