@@ -25,6 +25,7 @@ public class RedisConfig {
         return new LettuceConnectionFactory(host, port);
     }
 
+    // key, value 모두 문자열로 다루게 설정
     @Bean
     public RedisTemplate<String, String> redisTemplate(){
         RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
@@ -34,6 +35,7 @@ public class RedisConfig {
         return redisTemplate;
     }
 
+    // key, value 모두 문자열로 다루게 설정
     @Bean
     public StringRedisTemplate stringRedisTemplate(){
         StringRedisTemplate stringRedisTemplate = new StringRedisTemplate();
