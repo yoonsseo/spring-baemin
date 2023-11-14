@@ -15,6 +15,7 @@ public class RedisService {
 
     //redis에 <key, value> 삽입, timeout 분 동안 유지
     public void setValue(String key, String value, Long timeout){
+        //ValueOperations 는 Redis에서 값에 대한 기본적인 연산을 수행할 수 있는 메서드 제공
         ValueOperations<String, String> values = redisTemplate.opsForValue();
         values.set(key, value, Duration.ofMinutes(timeout));
     }
